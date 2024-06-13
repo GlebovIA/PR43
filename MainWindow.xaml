@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PR43"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" WindowStyle="None"
+        FontFamily="SegoeUI">
     <Grid>
-
+        <Grid Height="50" VerticalAlignment="Top">
+            <Image x:Name="titleImage" Width="40" Height="40" HorizontalAlignment="Left" Margin="5"/>
+            <Label Content="Библиотечный каталог книг и авторов" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Times New Roman" FontSize="16pt" Margin="50, 0"/>
+        </Grid>
+        <Grid Margin="0, 50, 0, 0">
+            <Frame x:Name="frame" NavigationUIVisibility="Hidden"/>
+        </Grid>
     </Grid>
 </Window>

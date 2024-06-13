@@ -9,7 +9,7 @@
         FontFamily="SegoeUI">
     <Grid>
         <Grid Height="50" VerticalAlignment="Top">
-            <Image x:Name="titleImage" Width="40" Height="40" HorizontalAlignment="Left" Margin="5"/>
+            <Image Source="/Images/Logo.png" Width="40" Height="40" HorizontalAlignment="Left" Margin="5" MouseDown="OpenIndex"/>
             <Label Content="Библиотечный каталог книг и авторов" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Times New Roman" FontSize="16pt" Margin="50, 0"/>
         </Grid>
         <Grid Margin="0, 50, 0, 0">

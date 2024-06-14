@@ -7,11 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Author.png" />
+    <None Remove="Images\Book.png" />
     <None Remove="Images\Logo.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="View\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Author.png" />
+    <Resource Include="Images\Book.png" />
     <Resource Include="Images\Logo.png" />
   </ItemGroup>
 

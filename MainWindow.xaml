@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PR43"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStyle="None"
+        Title="MainWindow" 
+        Height="450" Width="800"
+        MinHeight="450" MinWidth="800"
         FontFamily="SegoeUI">
     <Grid>
         <Grid Height="50" VerticalAlignment="Top">

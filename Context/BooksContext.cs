@@ -74,7 +74,7 @@ namespace PR43.Context
         }
         public RelayCommand OnEdit
         {
-            get { return new RelayCommand(obj => MainWindow.MW.frame.Navigate(new View.Add(this))); }
+            get { return new RelayCommand(obj => MainWindow.MW.frame.Navigate(new View.AddBook(this))); }
         }
         public RelayCommand OnSave
         {

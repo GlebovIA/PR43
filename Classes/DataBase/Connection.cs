@@ -8,7 +8,7 @@ namespace PR43.Classes.DataBase
             "Trusted_Connection=No;" +
             "DataBase=BooksAndAuthors;" +
             "User=sa;" +
-            "PWD=sa";
+            "PWD=sa;";
         public static SqlConnection OpenConnection()
         {
             SqlConnection connection = new SqlConnection(config);

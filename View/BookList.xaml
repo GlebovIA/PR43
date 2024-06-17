@@ -9,12 +9,17 @@
       Title="BookList">
 
     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <ListView ItemsSource="{Binding Books}">
+        <ListView ItemsSource="{Binding Books}" Margin="0, 0, 0, 50">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <element:Book DataContext="{Binding}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button Content="Добавить" Width="100" Height="25" Margin="0,0,10, 10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Command="{Binding NewBook}">
+            <Button.Effect>
+                <DropShadowEffect Direction="270" BlurRadius="5" ShadowDepth="2" Opacity="0.5"/>
+            </Button.Effect>
+        </Button>
     </Grid>
 </Page>

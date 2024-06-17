@@ -17,7 +17,7 @@
             <Setter Property="Foreground" Value="White"/>
         </Style>
     </UserControl.Resources>
-    <Grid Background="White">
+    <Grid Background="White" Margin="5">
         <Grid.Effect>
             <DropShadowEffect Direction="270" BlurRadius="5" ShadowDepth="2" Opacity="0.5"/>
         </Grid.Effect>

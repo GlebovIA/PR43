@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using PR43.View.Elements;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PR43.View
 {
@@ -18,9 +8,13 @@ namespace PR43.View
     /// </summary>
     public partial class Main : Page
     {
+        public Frame frame;
         public Main()
         {
             InitializeComponent();
+            frame = listFrame;
+            TabParent.Items.Add(new TabElement("Книги", "/Images/Book.png", TabElement.Lists.Books));
+            TabParent.Items.Add(new TabElement("Авторы", "/Images/Author.png", TabElement.Lists.Authors));
         }
     }
 }

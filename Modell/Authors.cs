@@ -48,6 +48,7 @@ namespace PR43.Modell
         public string Fio
         {
             get { return $"{_surname} {_name} {_lastname}"; }
+            set { }
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

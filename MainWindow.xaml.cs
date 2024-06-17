@@ -9,7 +9,7 @@ namespace PR43
     public partial class MainWindow : Window
     {
         public static MainWindow MW = new MainWindow();
-        public View.Main Main = new View.Main();
+        public static View.Main Main = new View.Main();
         public MainWindow()
         {
             InitializeComponent();

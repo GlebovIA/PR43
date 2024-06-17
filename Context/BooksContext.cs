@@ -62,7 +62,7 @@ namespace PR43.Context
                     $"Id = {Id}", out connection);
             }
             Connection.CloseConnection(connection);
-            MainWindow.MW.frame.Navigate(MainWindow.MW.Main);
+            MainWindow.MW.frame.Navigate(MainWindow.Main);
         }
         public void Delete()
         {
@@ -83,7 +83,7 @@ namespace PR43.Context
                 return new RelayCommand(obj =>
                 {
                     Author = AuthorsContext.AllAuthors().Where(x => x.Id == Author.Id).First();
-                    Save(true);
+                    Save();
                 });
             }
         }
@@ -94,7 +94,7 @@ namespace PR43.Context
                 return new RelayCommand(obj =>
                 {
                     Delete();
-                    (MainWindow.MW.Main.DataContext as ViewModell.VMBooks).Books.Remove(this);
+                    (MainWindow.Main.DataContext as ViewModell.VMBooks).Books.Remove(this);
                 });
             }
         }

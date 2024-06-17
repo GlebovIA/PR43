@@ -17,7 +17,7 @@
             <Setter Property="Foreground" Value="White"/>
         </Style>
     </UserControl.Resources>
-    <Grid Background="White">
+    <Grid Background="White" HorizontalAlignment="Stretch">
         <Grid.Effect>
             <DropShadowEffect Direction="270" BlurRadius="5" ShadowDepth="2" Opacity="0.5"/>
         </Grid.Effect>
@@ -37,11 +37,11 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Наименование:" VerticalAlignment="Top" Margin="10, 10, 10, 0"/>
+            <Label Content="Наименование:" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10, 10, 10, 0"/>
             <TextBox Text="{Binding Name}" Height="25" VerticalAlignment="Top" Margin="10, 36, 10, 0" VerticalContentAlignment="Center" IsEnabled="False"/>
-            <Label Content="Автор:" VerticalAlignment="Top" Margin="10, 10, 10, 0" Grid.Column="1"/>
+            <Label Content="Автор:" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10, 10, 10, 0" Grid.Column="1"/>
             <TextBox Text="{Binding Author.Fio}" Height="25" VerticalAlignment="Top" Margin="10, 36, 10, 0" VerticalContentAlignment="Center" IsEnabled="False" Grid.Column="1"/>
-            <Label Content="Описание:" VerticalAlignment="Top" Margin="10, 66, 10, 0" Grid.ColumnSpan="2"/>
+            <Label Content="Описание:" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10, 66, 10, 0" Grid.ColumnSpan="2"/>
             <TextBox Text="{Binding Description}" Height="25" VerticalAlignment="Top" Margin="10, 92, 10, 10" VerticalContentAlignment="Center" IsEnabled="False" Grid.ColumnSpan="2"/>
         </Grid>
     </Grid>

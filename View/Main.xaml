@@ -6,21 +6,20 @@
       xmlns:local="clr-namespace:PR43.View"
       xmlns:Element="clr-namespace:PR43.View.Books"
       mc:Ignorable="d" 
-      Title="Main"
-      Height="450" Width="800">
+      Title="Main">
 
-    <Grid>
+    <Grid Margin="10, 5, 10, 5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
-            <ListView x:Name="TabParent">
+            <ListView BorderThickness="0" x:Name="TabParent">
                 
             </ListView>
         </Grid>
         <Grid Grid.Column="1">
-            <Frame x:Name="listFrame" NavigationUIVisibility="Hidden"/>
+            <Frame x:Name="listFrame" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" NavigationUIVisibility="Hidden"/>
         </Grid>
     </Grid>
 </Page>

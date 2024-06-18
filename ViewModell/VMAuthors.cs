@@ -7,7 +7,7 @@ namespace PR43.ViewModell
 {
     public class VMAuthors : INotifyPropertyChanged
     {
-        public ObservableCollection<Context.AuthorsContext> Authors { get; set; }
+        public ObservableCollection<AuthorsContext> Authors { get; set; }
         public Classes.RelayCommand NewAuthor
         {
             get

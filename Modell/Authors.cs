@@ -22,6 +22,7 @@ namespace PR43.Modell
             set
             {
                 _surname = value;
+                Fio = Fio;
                 OnPropertyChanged("Surname");
             }
         }
@@ -32,6 +33,7 @@ namespace PR43.Modell
             set
             {
                 _name = value;
+                Fio = Fio;
                 OnPropertyChanged("Name");
             }
         }
@@ -42,13 +44,19 @@ namespace PR43.Modell
             set
             {
                 _lastname = value;
+                Fio = Fio;
                 OnPropertyChanged("Lastname");
             }
         }
+        private string _fio;
         public string Fio
         {
-            get { return $"{_surname} {_name} {_lastname}"; }
-            set { }
+            get { return _fio; }
+            set
+            {
+                _fio = $"{_surname} {_name} {_lastname}";
+                OnPropertyChanged("Fio");
+            }
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

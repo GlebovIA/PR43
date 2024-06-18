@@ -8,6 +8,7 @@ namespace PR43.Context
 {
     public class AuthorsContext : Authors
     {
+        private static bool _isNew = true;
         public AuthorsContext(bool save = false)
         {
             if (save) save = true;
@@ -30,10 +31,10 @@ namespace PR43.Context
             Connection.CloseConnection(connection);
             return allAuthors;
         }
-        public void Save(bool New = false)
+        public void Save()
         {
             SqlConnection connection;
-            if (New)
+            if (_isNew)
             {
                 SqlDataReader dataItems = Connection.Query("Insert into " +
                     "[dbo].[Authors](" +
@@ -54,7 +55,7 @@ namespace PR43.Context
                     "Set " +
                     $"Surname = N'{Surname}', " +
                     $"Name = N'{Name}', " +
-                    $"Lastname = N'{Lastname}', " +
+                    $"Lastname = N'{Lastname}' " +
                     "Where " +
                     $"Id = {Id}", out connection);
             }
@@ -71,13 +72,21 @@ namespace PR43.Context
         }
         public RelayCommand OnEdit
         {
-            get { return new RelayCommand(obj => MainWindow.MW.frame.Navigate(new View.AddAuthors(this))); }
+            get
+            {
+                _isNew = false;
+                return new RelayCommand(obj => MainWindow.MW.frame.Navigate(new View.AddAuthors(this)));
+            }
         }
         public RelayCommand OnSave
         {
             get
             {
-                return new RelayCommand(obj => Save(true));
+                return new RelayCommand(obj =>
+                {
+                    Save();
+                    _isNew = true;
+                });
             }
         }
         public RelayCommand OnDelete
@@ -87,7 +96,7 @@ namespace PR43.Context
                 return new RelayCommand(obj =>
                 {
                     Delete();
-                    (MainWindow.Main.DataContext as ViewModell.VMAuthors).Authors.Remove(this);
+                    (MainWindow.Main.Authors.DataContext as ViewModell.VMAuthors).Authors.Remove(this);
                 });
             }
         }

@@ -9,6 +9,7 @@ namespace PR43.Context
 {
     public class BooksContext : Books
     {
+        private bool _isNew = true;
         public BooksContext(bool save = false)
         {
             if (save) save = true;
@@ -33,10 +34,10 @@ namespace PR43.Context
             Connection.CloseConnection(connection);
             return allBooks;
         }
-        public void Save(bool New = false)
+        public void Save()
         {
             SqlConnection connection;
-            if (New)
+            if (_isNew)
             {
                 SqlDataReader dataItems = Connection.Query("Insert into " +
                     "[dbo].[Books](" +
@@ -74,7 +75,11 @@ namespace PR43.Context
         }
         public RelayCommand OnEdit
         {
-            get { return new RelayCommand(obj => MainWindow.MW.frame.Navigate(new View.AddBook(this))); }
+            get
+            {
+                _isNew = false;
+                return new RelayCommand(obj => MainWindow.MW.frame.Navigate(new View.AddBook(this)));
+            }
         }
         public RelayCommand OnSave
         {
@@ -84,6 +89,7 @@ namespace PR43.Context
                 {
                     Author = AuthorsContext.AllAuthors().Where(x => x.Id == Author.Id).First();
                     Save();
+                    _isNew = true;
                 });
             }
         }

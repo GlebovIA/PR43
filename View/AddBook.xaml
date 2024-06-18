@@ -23,7 +23,7 @@
             <Label Content="Наименование:" VerticalAlignment="Top" Margin="10, 10, 10, 0"/>
             <TextBox Text="{Binding book.Name}" Height="25" VerticalAlignment="Top" Margin="10, 36, 10, 0" VerticalContentAlignment="Center"/>
             <Label Content="Автор:" VerticalAlignment="Top" Margin="10, 66, 10, 0"/>
-            <ComboBox x:Name="categoriesCB" ItemsSource="{Binding authors.Authors}" DisplayMemberPath="Name" SelectedValue="{Binding book.Author.Id}" SelectedValuePath="Id" Height="25" VerticalAlignment="Top" Margin="10, 92, 10, 0" VerticalContentAlignment="Center"/>
+            <ComboBox x:Name="categoriesCB" ItemsSource="{Binding authors}" DisplayMemberPath="Fio" SelectedValue="{Binding book.Author.Id}" SelectedValuePath="Id" Height="25" VerticalAlignment="Top" Margin="10, 92, 10, 0" VerticalContentAlignment="Center"/>
             <Label Content="Описание:" VerticalAlignment="Top" Margin="10, 122, 10, 0"/>
             <TextBox Text="{Binding book.Description}" Height="25" VerticalAlignment="Top" Margin="10, 150, 10, 0" VerticalContentAlignment="Center"/>
             <Button Content="Сохранить" Width="100" Height="25" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Column="1" Command="{Binding book.OnSave}">

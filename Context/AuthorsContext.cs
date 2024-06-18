@@ -3,12 +3,14 @@ using PR43.Classes.DataBase;
 using PR43.Modell;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Windows;
 
 namespace PR43.Context
 {
     public class AuthorsContext : Authors
     {
-        private static bool _isNew = true;
+        private bool _isNew = true;
         public AuthorsContext(bool save = false)
         {
             if (save) save = true;
@@ -36,39 +38,64 @@ namespace PR43.Context
             SqlConnection connection;
             if (_isNew)
             {
-                SqlDataReader dataItems = Connection.Query("Insert into " +
-                    "[dbo].[Authors](" +
-                    "Surname, " +
-                    "Name, " +
-                    "Lastname) " +
-                    "OUTPUT Inserted.Id " +
-                    "Values (" +
-                    $"N'{Surname}', " +
-                    $"N'{Name}', " +
-                    $"N'{Lastname}')", out connection);
-                dataItems.Read();
-                Id = dataItems.GetInt32(0);
+                try
+                {
+                    SqlDataReader dataItems = Connection.Query("Insert into " +
+                        "[dbo].[Authors](" +
+                        "Surname, " +
+                        "Name, " +
+                        "Lastname) " +
+                        "OUTPUT Inserted.Id " +
+                        "Values (" +
+                        $"N'{Surname}', " +
+                        $"N'{Name}', " +
+                        $"N'{Lastname}')", out connection);
+                    dataItems.Read();
+                    Id = dataItems.GetInt32(0);
+                    Connection.CloseConnection(connection);
+                    MessageBox.Show("Действие выполнено!", "Уведмление");
+                }
+                catch
+                {
+                    MessageBox.Show("Не удалось выполнить действие!", "Уведмление");
+                }
             }
             else
             {
-                Connection.Query("Update [dbo].[Authors] " +
-                    "Set " +
-                    $"Surname = N'{Surname}', " +
-                    $"Name = N'{Name}', " +
-                    $"Lastname = N'{Lastname}' " +
-                    "Where " +
-                    $"Id = {Id}", out connection);
+                try
+                {
+                    Connection.Query("Update [dbo].[Authors] " +
+                        "Set " +
+                        $"Surname = N'{Surname}', " +
+                        $"Name = N'{Name}', " +
+                        $"Lastname = N'{Lastname}' " +
+                        "Where " +
+                        $"Id = {Id}", out connection);
+                    Connection.CloseConnection(connection);
+                }
+                catch
+                {
+                    MessageBox.Show("Не удалось выполнить действие!", "Уведмление");
+                }
             }
-            Connection.CloseConnection(connection);
+            _isNew = true;
             MainWindow.MW.frame.Navigate(MainWindow.Main);
         }
-        public void Delete()
+        private void Delete(bool withBooks)
         {
             SqlConnection connection;
+            if (withBooks)
+            {
+                Connection.Query("Delete from [dbo].[Books] " +
+                            "Where " +
+                            $"Author = {Id}", out connection);
+            }
             Connection.Query("Delete from [dbo].[Authors] " +
                 "Where " +
                 $"Id = {Id}", out connection);
             Connection.CloseConnection(connection);
+            (MainWindow.Main.Authors.DataContext as ViewModell.VMAuthors).Authors.Remove(this);
+            MessageBox.Show("Действие выполнено!", "Уведмление");
         }
         public RelayCommand OnEdit
         {
@@ -85,7 +112,6 @@ namespace PR43.Context
                 return new RelayCommand(obj =>
                 {
                     Save();
-                    _isNew = true;
                 });
             }
         }
@@ -95,8 +121,17 @@ namespace PR43.Context
             {
                 return new RelayCommand(obj =>
                 {
-                    Delete();
-                    (MainWindow.Main.Authors.DataContext as ViewModell.VMAuthors).Authors.Remove(this);
+                    if (MessageBox.Show("Вы уверены, что хотите удалить этого автора?", "Уведомление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        if (BooksContext.AllBooks().Where(x => x.Author.Id == this.Id).ToList().Count > 0)
+                        {
+                            if (MessageBox.Show("У этого автора есть книги, вы действительно хотите удалить его?", "Уведомление", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            {
+                                Delete(true);
+                            }
+                        }
+                        else Delete(false);
+                    }
                 });
             }
         }

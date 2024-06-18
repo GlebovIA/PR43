@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace PR43.View.Elements
 {
@@ -17,10 +16,18 @@ namespace PR43.View.Elements
             switch (list)
             {
                 case Lists.Books:
-                    this.MouseDown += (s, a) => _main.frame.Navigate(_main.Books);
+                    this.MouseDown += (s, a) =>
+                    {
+                        _main.Books = new BookList();
+                        _main.frame.Navigate(_main.Books);
+                    };
                     break;
                 case Lists.Authors:
-                    this.MouseDown += (s, a) => _main.frame.Navigate(_main.Authors);
+                    this.MouseDown += (s, a) =>
+                    {
+                        _main.Authors = new AuthorList();
+                        _main.frame.Navigate(_main.Authors);
+                    };
                     break;
             }
             DataContext = new
@@ -29,11 +36,6 @@ namespace PR43.View.Elements
                 Source = source,
 
             };
-        }
-
-        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-
         }
     }
 }

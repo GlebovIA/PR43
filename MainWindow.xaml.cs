@@ -8,7 +8,7 @@ namespace PR43
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static MainWindow MW = new MainWindow();
+        public static MainWindow MW;
         public static View.Main Main = new View.Main();
         public MainWindow()
         {

@@ -4,6 +4,7 @@ using PR43.Modell;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Windows;
 
 namespace PR43.Context
 {
@@ -27,7 +28,7 @@ namespace PR43.Context
                 {
                     Id = dataItems.GetInt32(0),
                     Name = dataItems.GetString(1),
-                    Author = dataItems.IsDBNull(2) ? null : allAuthors.Where(x => x.Id == dataItems.GetInt32(4)).First(),
+                    Author = dataItems.IsDBNull(2) ? null : allAuthors.Where(x => x.Id == dataItems.GetInt32(2)).First(),
                     Description = dataItems.GetString(3),
                 });
             }
@@ -39,39 +40,64 @@ namespace PR43.Context
             SqlConnection connection;
             if (_isNew)
             {
-                SqlDataReader dataItems = Connection.Query("Insert into " +
-                    "[dbo].[Books](" +
-                    "Name, " +
-                    "Author, " +
-                    "Description) " +
-                    "OUTPUT Inserted.Id " +
-                    "Values (" +
-                    $"N'{Name}', " +
-                    $"{Author}, " +
-                    $"N'{Description}')", out connection);
-                dataItems.Read();
-                Id = dataItems.GetInt32(0);
+                try
+                {
+                    SqlDataReader dataItems = Connection.Query("Insert into " +
+                        "[dbo].[Books](" +
+                        "Name, " +
+                        "Author, " +
+                        "Description) " +
+                        "OUTPUT Inserted.Id " +
+                        "Values (" +
+                        $"N'{Name}', " +
+                        $"{Author.Id}, " +
+                        $"N'{Description}')", out connection);
+                    dataItems.Read();
+                    Id = dataItems.GetInt32(0);
+                    Connection.CloseConnection(connection);
+                    MessageBox.Show("Действие выполнено!", "Уведмление");
+                }
+                catch
+                {
+                    MessageBox.Show("Не удалось выполнить действие!", "Уведмление");
+                }
             }
             else
             {
-                Connection.Query("Update [dbo].[Books] " +
-                    "Set " +
-                    $"Name = N'{Name}', " +
-                    $"Author = {Author}, " +
-                    $"Description = N'{Description}' " +
-                    "Where " +
-                    $"Id = {Id}", out connection);
+                try
+                {
+                    Connection.Query("Update [dbo].[Books] " +
+                        "Set " +
+                        $"Name = N'{Name}', " +
+                        $"Author = {Author.Id}, " +
+                        $"Description = N'{Description}' " +
+                        "Where " +
+                        $"Id = {Id}", out connection);
+                    Connection.CloseConnection(connection);
+                    MessageBox.Show("Действие выполнено!", "Уведмление");
+                }
+                catch
+                {
+                    MessageBox.Show("Не удалось выполнить действие!", "Уведмление");
+                }
             }
-            Connection.CloseConnection(connection);
             MainWindow.MW.frame.Navigate(MainWindow.Main);
         }
         public void Delete()
         {
-            SqlConnection connection;
-            Connection.Query("Delete from [dbo].[Books] " +
-                "Where " +
-                $"Id = {Id}", out connection);
-            Connection.CloseConnection(connection);
+            try
+            {
+                SqlConnection connection;
+                Connection.Query("Delete from [dbo].[Books] " +
+                    "Where " +
+                    $"Id = {Id}", out connection);
+                Connection.CloseConnection(connection);
+                MessageBox.Show("Действие выполнено!", "Уведмление");
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось выполнить действие!", "Уведмление");
+            }
         }
         public RelayCommand OnEdit
         {
@@ -100,7 +126,7 @@ namespace PR43.Context
                 return new RelayCommand(obj =>
                 {
                     Delete();
-                    (MainWindow.Main.DataContext as ViewModell.VMBooks).Books.Remove(this);
+                    (MainWindow.Main.Books.DataContext as ViewModell.VMBooks).Books.Remove(this);
                 });
             }
         }

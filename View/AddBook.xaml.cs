@@ -14,7 +14,7 @@ namespace PR43.View
             DataContext = new
             {
                 book = Context,
-                authors = new VMAuthors()
+                authors = new VMAuthors().Authors
             };
         }
     }
